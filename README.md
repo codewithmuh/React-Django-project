@@ -1,6 +1,6 @@
 # BigCommerce-project
 
-####################################3
+####################################
 
 cd be
 pip install -r requirements.txt
