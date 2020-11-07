@@ -60,9 +60,7 @@ ROOT_URLCONF = 'bigCommerce.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(BASE_DIR, 'React_DashBoard/build')
-        ],
+        'DIRS': [os.path.join(BASE_DIR ,  'React_DashBoard/build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -76,6 +74,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'bigCommerce.wsgi.application'
+X_FRAME_OPTIONS = 'ALLOWALL'
+
 
 
 # Database
@@ -126,6 +126,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
 
 
 
