@@ -106,7 +106,7 @@ export default class List extends React.Component {
         <div className="row">
           <div className="col-md-12">
             <div className="card">
-                <div className="card-header">List Orders</div>
+                <div className="card-header bg-secondary text-white">List Orders</div>
 
                 <div className="card-body">
                   {

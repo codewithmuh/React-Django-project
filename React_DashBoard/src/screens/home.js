@@ -53,11 +53,11 @@ export default class Home extends React.Component {
     ];
 
     return (
-      <div className="container">
+      <div className="container ">
         <div className="row">
           <div className="col-md-8">
             <div className="card">
-              <div className="card-header">Home Page</div>
+              <div className="card-header bg-secondary text-white">Home Page</div>
 
               <div className="card-body">
                 {
@@ -97,7 +97,7 @@ export default class Home extends React.Component {
           </div>
           <div className="col-md-4">
             <div className="card">
-                <div className="card-header">Side Bar</div>
+                <div className="card-header bg-secondary text-white">Side Bar</div>
 
                 <div className="card-body">
                   {

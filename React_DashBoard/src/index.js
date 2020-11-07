@@ -11,13 +11,13 @@ import ListOfThings from './screens/list';
 ReactDOM.render((
   <BrowserRouter>
     <div>
-      <nav className="container">
+      <nav className="container  bg-primary">
         <ul className="nav mt-2 mb-2">
           <li className="nav-item">
-            <Link className="nav-link" to="/">Home</Link>
+            <Link className="nav-link text-white" to="/">Home</Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/list">List</Link>
+            <Link className="nav-link text-white" to="/list">List</Link>
           </li>
         </ul>
       </nav>
