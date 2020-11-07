@@ -1,10 +1,20 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
 from django.views.decorators.clickjacking import xframe_options_exempt
+from django.http import  HttpResponse
 
 
-class home(TemplateView):
-    @xframe_options_exempt
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        return self.render_to_response(context)
+from bigcommerce.api import BigcommerceApi
+from decouple import config, Csv
+
+
+def client_secret():
+    return config('appClientSecret')
+
+@xframe_options_exempt
+def dashBoard(request):
+    if request.GET.get('signed_payload'):
+        signed_payload = request.GET.get('signed_payload')
+        BigcommerceApi.oauth_verify_payload(signed_payload, client_secret())
+        return render(request ,'index.html')
+    return HttpResponse('Some thing Went Wrong')
+    

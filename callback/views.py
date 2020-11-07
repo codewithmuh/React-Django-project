@@ -34,9 +34,7 @@ def auth(request):
         email = token['user']['email']
         access_token = token['access_token']
 
-        response = HttpResponse("App is Installed Successfully")
 
+        return render(request , 'auth.html')
 
-        return response
-    
     return HttpResponse("Something Went Wrong")
