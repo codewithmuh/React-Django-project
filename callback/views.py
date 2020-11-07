@@ -4,16 +4,20 @@ import requests
 import datetime
 
 from bigcommerce.api import BigcommerceApi
+from decouple import config, Csv
 
 
 def client_secret():
     return config('appClientSecret')
 
+def client_id():
+    return config('appClientId')
+
+
 
 
 
 def auth(request):
-    print(request.path_info)
 
     if request.GET.get('code') and request.GET.get('context') and request.GET.get('scope'):
         code = request.GET.get('code')
@@ -23,13 +27,16 @@ def auth(request):
         
         store_hash = context.split('/')[1]
 
-        client = BigcommerceApi(client_id=config('appClientId') , store_hash=config('apiStoreHash'))
+        client = BigcommerceApi(client_id=client_id(), store_hash=config('apiStoreHash'))
+
         token = client.oauth_fetch_token(client_secret(), code, context, scope, redirect)
         bc_user_id = token['user']['id']
         email = token['user']['email']
         access_token = token['access_token']
 
         response = HttpResponse("App is Installed Successfully")
+
+
         return response
     
     return HttpResponse("Something Went Wrong")
