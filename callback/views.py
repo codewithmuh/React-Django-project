@@ -38,3 +38,6 @@ def auth(request):
         return render(request , 'auth.html')
 
     return HttpResponse("Something Went Wrong")
+    
+    
+   #eslfjk
