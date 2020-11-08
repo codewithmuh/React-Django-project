@@ -23,7 +23,7 @@ def auth(request):
         code = request.GET.get('code')
         context = request.GET.get('context')
         scope = request.GET.get('scope')
-        redirect = 'http://bigcommerce02.herokuapp.com/cb/auth'
+        redirect = 'https://bigcommerce02.herokuapp.com/cb/auth'
         
         store_hash = context.split('/')[1]
 
@@ -39,5 +39,4 @@ def auth(request):
 
     return HttpResponse("Something Went Wrong")
     
-    
-   #eslfjk
+ 
