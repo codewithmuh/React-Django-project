@@ -55,11 +55,56 @@ export default class Home extends React.Component {
     return (
       <div className="container ">
         <div className="row">
-          <div className="col-md-8">
+        <div className="col-md-12 m-3">
             <div className="card">
-              <div className="card-header bg-secondary text-white">Home Page</div>
+                {/* <div className="card-header">Store Overview</div> */}
+
+                <div className="card-body">
+                  <div className='row'>
+                    <h4 className='col'>Store Overview</h4>
+                    <a href='{ this.state.storeInfo.secure_url}' className='col-md-3 btn  btn-outline-primary'>View Storefront</a>
+                  </div>
+                  {
+                    this.state.isStoreInfoLoading
+                    ? 
+                    <Spinner/>
+                    : 
+                    <section>
+                      {/* { 
+                        this.state.storeInfo.logo.url
+                        ? 
+                        <img src={ this.state.storeInfo.logo.url } className="img-fluid img-thumbnail" />
+                        : 
+                        <h5>{ this.state.storeInfo.name }</h5>
+                      } */}
+
+                      <ul className="list-group m-3">
+                        <li className="list-group-item">
+                          <div className="d-flex w-100 justify-content-between">
+                            <h5 className="mb-1">Domain</h5>
+                          </div>
+                          <p className="mb-1">{ this.state.storeInfo.domain }</p>
+                        </li>
+                        {/* <li className="list-group-item">
+                          <div className="d-flex w-100 justify-content-between">
+                            <h5 className="mb-1">Secure URL</h5>
+                          </div>
+                          <p className="mb-1">{ this.state.storeInfo.secure_url }</p>
+                        </li> */}
+ 
+                      </ul>
+
+                    </section>
+                }
+                </div>
+            </div>
+          </div>
+        <div className="col-md-12 m-3">
+            <div className="card">
+              {/* <div className="card-header">Catalog Summary</div> */}
 
               <div className="card-body">
+                <h4>Catalog Summary</h4>
                 {
                   (this.state.isStoreInfoLoading || this.state.isCatalogSummaryLoading)
                   ?
@@ -93,45 +138,6 @@ export default class Home extends React.Component {
                   </div>
                 }
               </div>
-            </div>
-          </div>
-          <div className="col-md-4">
-            <div className="card">
-                <div className="card-header bg-secondary text-white">Side Bar</div>
-
-                <div className="card-body">
-                  {
-                    this.state.isStoreInfoLoading
-                    ? 
-                    <Spinner/>
-                    : 
-                    <section>
-                      { 
-                        this.state.storeInfo.logo.url
-                        ? 
-                        <img src={ this.state.storeInfo.logo.url } className="img-fluid img-thumbnail" />
-                        : 
-                        <h5>{ this.state.storeInfo.name }</h5>
-                      }
-
-                      <ul className="list-group">
-                        <li className="list-group-item">
-                          <div className="d-flex w-100 justify-content-between">
-                            <h5 className="mb-1">Domain</h5>
-                          </div>
-                          <p className="mb-1">{ this.state.storeInfo.domain }</p>
-                        </li>
-                        <li className="list-group-item">
-                          <div className="d-flex w-100 justify-content-between">
-                            <h5 className="mb-1">Secure URL</h5>
-                          </div>
-                          <p className="mb-1">{ this.state.storeInfo.secure_url }</p>
-                        </li>
-                      </ul>
-
-                    </section>
-                }
-                </div>
             </div>
           </div>
         </div>
