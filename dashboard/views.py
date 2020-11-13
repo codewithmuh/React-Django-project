@@ -15,6 +15,7 @@ def dashBoard(request):
     if request.GET.get('signed_payload'):
         signed_payload = request.GET.get('signed_payload')
         BigcommerceApi.oauth_verify_payload(signed_payload, client_secret())
+    
     return render(request ,'index.html')
-    return HttpResponse('Some thing Went Wrong')
+    # return HttpResponse('Some thing Went Wrong')
     
