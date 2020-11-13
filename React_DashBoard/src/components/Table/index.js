@@ -27,7 +27,7 @@ export class Table extends React.Component {
   render() {
     return (
       <table className="table">
-        <thead className="table-thead">
+        <thead className="table-thead" style={{background: '#f3f3f3'}}>
           <tr>{this.props.tableHeaders.map(function(header, index) {
             return <td key={index}>{header.label}</td>;
           })}</tr>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {Spinner} from '../components';
 import {ApiService} from '../services/ApiService';
 
@@ -62,7 +63,17 @@ export default class Home extends React.Component {
                 <div className="card-body">
                   <div className='row'>
                     <h4 className='col'>Store Overview</h4>
-                    <a href='{ this.state.storeInfo.secure_url}' className='col-md-3 btn  btn-outline-primary'>View Storefront</a>
+                    {
+                  (this.state.isStoreInfoLoading || this.state.isCatalogSummaryLoading)
+                  ? 
+                  <></>
+                  :
+                  <a href= {this.state.storeInfo.secure_url} className='col-md-3 mr-5 btn  btn-outline-primary'>View Storefront</a> 
+                  }
+                  </div>
+                  
+                   <div className='row'>
+                    <h7 className="col">A view into your default BigCommerce storefront</h7>
                   </div>
                   {
                     this.state.isStoreInfoLoading
@@ -105,6 +116,8 @@ export default class Home extends React.Component {
 
               <div className="card-body">
                 <h4>Catalog Summary</h4>
+                <h7>A simple Overview of your Catalog</h7>
+
                 {
                   (this.state.isStoreInfoLoading || this.state.isCatalogSummaryLoading)
                   ?

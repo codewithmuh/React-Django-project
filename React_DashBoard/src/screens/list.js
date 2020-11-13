@@ -106,7 +106,14 @@ export default class List extends React.Component {
         <div className="row">
           <div className="col-md-12">
             <div className="card">
-                <div className="card-header bg-secondary text-white">List Orders</div>
+                <h4 className="m-4 mb-3">Orders</h4>
+                {
+                    this.state.isOrdersLoading
+                    ? 
+                    <></>
+                    : 
+                <h5 className="m-4">{this.state.orders.data.length } Orders</h5>
+                }
 
                 <div className="card-body">
                   {
@@ -117,7 +124,7 @@ export default class List extends React.Component {
                     this.hasOrders()
                     ? 
                     <section>
-                      <Table tableHeaders={this.state.tableHeaders} tableData={this.state.orders.data} />
+                      <Table striped bordered hover tableHeaders={this.state.tableHeaders} tableData={this.state.orders.data} />
                     </section>
                     : 
                     <section>
