@@ -5,6 +5,8 @@ export class Table extends React.Component {
     super(props);
   }
 
+
+
   getTableRow(data, index) {
     return (
       <tr key={index}>
@@ -24,7 +26,18 @@ export class Table extends React.Component {
     );
   }
 
+  
+  
+
   render() {
+
+    
+    // Get current Pages
+    const indexOfLastPage = this.props.currentPage * this.props.rowPerPage;
+    const indexOfFirstPage = indexOfLastPage - this.props.rowPerPage;
+    const paginated = this.props.tableData.slice(indexOfFirstPage, indexOfLastPage);
+
+
     return (
       <table className="table">
         <thead className="table-thead" style={{background: '#f3f3f3'}}>
@@ -33,7 +46,7 @@ export class Table extends React.Component {
           })}</tr>
         </thead>
         <tbody className="table-tbody">
-          {this.props.tableData.map(this.getTableRow.bind(this))}
+          {paginated.map(this.getTableRow.bind(this))}
         </tbody>
       </table>
     );

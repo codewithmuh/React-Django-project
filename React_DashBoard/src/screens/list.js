@@ -8,6 +8,8 @@ export default class List extends React.Component {
 
     this.state = {
       isOrdersLoading: true,
+      currentPage : 1,
+      rowPerPage : 3,
       orders: {
         data: [],
         pagination: {},
@@ -85,6 +87,7 @@ export default class List extends React.Component {
     });
   }
 
+
   cancelOrder(orderId) {
   	const newOrderData = { status_id: 5 };
 
@@ -100,7 +103,29 @@ export default class List extends React.Component {
     return (this.state.orders.data.length > 0);
   }
 
+  paginateplus = (pageNumber) => {
+    if(this.state.orders.data.length > this.state.currentPage * this.state.rowPerPage ){
+      this.setState({currentPage : this.state.currentPage+1})
+  }
+};
+  paginateminus = (pageNumber) => {
+    if( this.state.currentPage > 1){
+      this.setState({currentPage : this.state.currentPage-1})
+      }
+  };
+
+
+
+  componentDidUpdate(){
+    console.log(this.state.currentPage)
+  }
+
   render() {
+
+    const indexOfLastPage = this.state.currentPage * this.state.rowPerPage;
+    const indexOfFirstPage = indexOfLastPage - this.state.rowPerPage;
+
+
     return (
       <div className="container">
         <div className="row">
@@ -108,12 +133,22 @@ export default class List extends React.Component {
             <div className="card">
                 <h4 className="m-4 mb-3">Orders</h4>
                 {
-                    this.state.isOrdersLoading
-                    ? 
-                    <></>
-                    : 
-                <h5 className="m-4">{this.state.orders.data.length } Orders</h5>
+                  this.state.isOrdersLoading
+                  ? 
+                  <></>
+                  :
+                  <></>
                 }
+                  <div className='row'>
+                    <div className='col-md-9'>
+                    <h5 className="m-4">{this.state.orders.data.length } Orders</h5>
+                    </div>
+                    <div className='col-md-3' style={{display: 'flex', alignItems: 'center'}}>
+                        <h5>{indexOfFirstPage +1} - {this.state.orders.data.length <= indexOfLastPage ?  this.state.orders.data.length : indexOfLastPage } of {this.state.orders.data.length }</h5>
+                          <h5 style={{cursor: 'pointer', marginLeft: '15px'}} onClick={() => this.paginateminus()}> {"<"}  </h5>
+                          <h5 style={{cursor: 'pointer', marginLeft: '15px'}} onClick={() => this.paginateplus()}> {">"}  </h5>
+                    </div>
+                  </div> 
 
                 <div className="card-body">
                   {
@@ -124,13 +159,18 @@ export default class List extends React.Component {
                     this.hasOrders()
                     ? 
                     <section>
-                      <Table striped bordered hover tableHeaders={this.state.tableHeaders} tableData={this.state.orders.data} />
+                      <Table striped bordered hover
+                      tableHeaders={this.state.tableHeaders}
+                      tableData={this.state.orders.data}
+                      rowPerPage={this.state.rowPerPage}
+                      currentPage={this.state.currentPage}
+                    />
                     </section>
                     : 
                     <section>
                       <div className="emptyTable">No orders exist yet!</div>
                     </section>
-                  }
+                    }
                 </div>
             </div>
           </div>
