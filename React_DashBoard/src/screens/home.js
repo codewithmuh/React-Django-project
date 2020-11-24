@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import {Spinner} from '../components';
 import {ApiService} from '../services/ApiService';
+import { Button } from '@bigcommerce/big-design';
+
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -68,8 +69,10 @@ export default class Home extends React.Component {
                   ? 
                   <></>
                   :
-                  <a href= {this.state.storeInfo.secure_url} className='col-md-3 mr-5 btn  btn-outline-primary'>View Storefront</a> 
+                  <Button href= {this.state.storeInfo.secure_url} className='col-md-3 mr-5 '>View Storefront</Button> 
                   }
+                  {/* <Button href= {this.state.storeInfo.secure_url} className='col-md-3' style={{marginRight: '10px'}}>View Storefront</Button>  */}
+
                   </div>
                   
                    <div className='row'>
