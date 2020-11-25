@@ -38,17 +38,25 @@ export class Table extends React.Component {
     const paginated = this.props.tableData.slice(indexOfFirstPage, indexOfLastPage);
 
 
-    return (
+    return ( <>
       <table className="table">
+
+
         <thead className="table-thead" style={{background: '#f3f3f3'}}>
           <tr>{this.props.tableHeaders.map(function(header, index) {
             return <td key={index}>{header.label}</td>;
           })}</tr>
         </thead>
+
+
         <tbody className="table-tbody">
           {paginated.map(this.getTableRow.bind(this))}
         </tbody>
       </table>
+
+
+
+</>
     );
   }
 }
