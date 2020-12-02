@@ -34,9 +34,8 @@ def auth(request):
         email = token['user']['email']
         access_token = token['access_token']
 
-        rc = request.COOKIES['bc_user_id']
 
-        return render(request , 'auth.html', {'token' : rc})
+        return render(request , 'auth.html', {'token' : access_token})
 
     return HttpResponse("Something Went Wrong")
     
