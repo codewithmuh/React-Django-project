@@ -4,7 +4,9 @@ import Loader from "./loader";
 
 
 function getList() {
-    return fetch('/bc-api/v2/orders')
+    const email = localStorage.getItem('ajs_user_traits')
+    console.log(email)
+    return fetch(`/bc-api/v2/orders?email=${email}`)
       .then(data => data.json())
 } 
 
