@@ -24,7 +24,8 @@ def auth(request):
         code = request.GET.get('code')
         context = request.GET.get('context')
         scope = request.GET.get('scope')
-        redirect = 'https://bigcommerce02.herokuapp.com/cb/auth'
+        redirect = config('callBackURL')
+        config('callBackURL')
         
         store_hash = context.split('/')[1]
 
