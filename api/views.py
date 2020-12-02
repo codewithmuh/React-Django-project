@@ -29,7 +29,7 @@ def orders(request):
     access_token = getToken(request)
     print(access_token)
     url = 'https://api.bigcommerce.com/stores/4zjutairi8/v2/orders'
-    headers = {'X-Auth-Token':  access_token , 'Accept': 'application/json', 'host':'api.bigcommerce.com'  ,'Content-Type': 'application/json'}
+    headers = {'X-Auth-Token':  config('apiToken') , 'Accept': 'application/json', 'host':'api.bigcommerce.com'  ,'Content-Type': 'application/json'}
     r = requests.get(url, headers=headers)
     return HttpResponse(r)
 

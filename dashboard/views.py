@@ -12,10 +12,11 @@ def client_secret():
 
 @xframe_options_exempt
 def dashBoard(request):
-    if request.GET.get('signed_payload'):
+    # if request.GET.get('signed_payload'):
+    if request.GET.get('code') and request.GET.get('context') and request.GET.get('scope'):
         signed_payload = request.GET.get('signed_payload')
         BigcommerceApi.oauth_verify_payload(signed_payload, client_secret())
-    return render(request ,'index.html')
+        return render(request ,'index.html')
         
     return HttpResponse('Some thing Went Wrong')
     
