@@ -35,7 +35,7 @@ def auth(request):
         access_token = token['access_token']
 
 
-        return render(request , 'auth.html', {'token' : token})
+        return render(request , 'auth.html', {'token' : access_token})
 
     return HttpResponse("Something Went Wrong")
     
