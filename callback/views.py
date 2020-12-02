@@ -36,7 +36,7 @@ def auth(request):
         access_token = token['access_token']
 
 
-        b = Auth.objects.create(mail = "dd@gmail.com", storehash = store_hash, token = access_token)
+        b = Auth.objects.create(user_id = bc_user_id ,mail = email, storehash = store_hash, token = access_token)
 
         return render(request , 'auth.html', {'token' : token})
 
