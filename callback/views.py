@@ -25,7 +25,6 @@ def auth(request):
         context = request.GET.get('context')
         scope = request.GET.get('scope')
         redirect = config('callBackURL')
-        config('callBackURL')
         
         store_hash = context.split('/')[1]
 
