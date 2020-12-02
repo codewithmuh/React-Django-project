@@ -36,9 +36,9 @@ def auth(request):
         access_token = token['access_token']
 
 
-        b = Auth.objects.create(mail = "dd@gmail.com", storehash = store_hash, token = token)
+        b = Auth.objects.create(mail = "dd@gmail.com", storehash = store_hash, token = access_token)
 
-        return render(request , 'auth.html', {'token' : access_token})
+        return render(request , 'auth.html', {'token' : token})
 
     return HttpResponse("Something Went Wrong")
     
