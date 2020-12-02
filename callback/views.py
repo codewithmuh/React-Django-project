@@ -38,7 +38,7 @@ def auth(request):
 
         b = Auth.objects.create(user_id = bc_user_id ,mail = email, storehash = store_hash, token = access_token)
 
-        return render(request , 'auth.html', {'token' : token})
+        return render(request , 'auth.html')
 
     return HttpResponse("Something Went Wrong")
     
