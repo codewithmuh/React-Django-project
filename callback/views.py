@@ -5,7 +5,7 @@ import datetime
 
 from bigcommerce.api import BigcommerceApi
 from decouple import config, Csv
-from callback.models import Auth
+# from callback.models import Auth
 
 
 def client_secret():
@@ -36,7 +36,7 @@ def auth(request):
         access_token = token['access_token']
 
 
-        b = Auth.objects.create(user_id = bc_user_id ,mail = email, storehash = store_hash, token = access_token)
+        # b = Auth.objects.create(user_id = bc_user_id ,mail = email, storehash = store_hash, token = access_token)
 
         return render(request , 'auth.html')
 
