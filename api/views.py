@@ -77,7 +77,7 @@ def resource(request, id):
 
 @csrf_exempt
 def store(request):
-    url = 'https://api.bigcommerce.com/stores/4zjutairi8/v2/store'
+    url = 'https://api.bigcommerce.com/stores/' + config('apiStoreHash') + '/v2/store'
     headers = {'X-Auth-Token': config('apiToken') , 'Accept': 'application/json', 'host':'api.bigcommerce.com'  ,'Content-Type': 'application/json'}
     r = requests.get(url, headers=headers)
     return HttpResponse(r)
