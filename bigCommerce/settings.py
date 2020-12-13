@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'dashboard',
     'api',
     'callback',
+    'sslserver'
 ]
 
 MIDDLEWARE = [

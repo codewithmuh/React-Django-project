@@ -34,8 +34,8 @@ def auth(request):
         bc_user_id = token['user']['id']
         email = token['user']['email']
         access_token = token['access_token']
-
-
+        pp = request.build_absolute_uri() 
+        print('this is url   ' + pp)
         # b = Auth.objects.create(user_id = bc_user_id ,mail = email, storehash = store_hash, token = access_token)
 
         return render(request , 'auth.html')

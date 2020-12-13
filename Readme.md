@@ -1,3 +1,5 @@
+Python 3.8 is required for thsi App
+
 Open Url https://login.bigcommerce.com/
 login your account
 from side menue go to Advance Setting > API Accounts
