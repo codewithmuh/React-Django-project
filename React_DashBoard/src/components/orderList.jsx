@@ -1,14 +1,13 @@
-import { Button, Table } from "@bigcommerce/big-design";
+import { Button, Table, Panel, Modal , Text, createAlertsManager , AlertsManager } from "@bigcommerce/big-design";
 import { useState, useEffect } from "react";
 import Loader from "./loader";
 
+const alertsManager = createAlertsManager()
 
 function getList() {
     return fetch(`/bc-api/v2/orders`)
     .then(data => data.json())
 } 
-
-
 
 function orderUpdate(orderId){
   return fetch(`/bc-api/v2/orders/${orderId}`, {
@@ -20,68 +19,139 @@ function orderUpdate(orderId){
   })
 }
 
+function orderDelete(orderId){
+  return fetch(`/bc-api/v2/orders/${orderId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+}
 
+
+function AddAlert(title, details, type) {
+  const alert = {
+    header: title,
+    messages: [
+      {
+        text: details,
+      },
+    ],
+    type: type,
+    onClose: () => null,
+    autoDismiss: true
+  }
+  return(alertsManager.add(alert))
+}
 
 
 function OrderList() {
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPageOptions] = useState([5, 10, 20, 30]);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [currentItems, setCurrentItems] = useState([]);
+  const [loading, setLoading] = useState(true)
+  const [data, setList] = useState([]);
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPageOptions] = useState([5, 10, 20, 30]);
-    const [itemsPerPage, setItemsPerPage] = useState(5);
-    const [currentItems, setCurrentItems] = useState([]);
-    const [loading, setLoading] = useState(true)
-    const [data, setList] = useState([]);
 
-    const columns=[
-        { header: 'Order Id', hash: 'id', render: ({ id }) => id },
-        { header: 'Billing Name', hash: 'billing_address', render: ({ billing_address }) =>`${ billing_address.first_name} ${billing_address.last_name}` },
-        { header: 'Order Total', hash: 'total_tax', render: ({ total_tax }) => total_tax },
-        { header: 'Order Status', hash: 'custom_status', render: ({ custom_status }) => custom_status },
-        { header: 'Action', hash: 'stock', render: ({ id }) => <Button actionType="destructive" onClick={() => orderUpdate(id).then(setLoading(true))} >Cancel</Button> },
+  function DeleteAlert(){
+    AddAlert('Order Delete', 'Order Has Been Deleted Successfully!', 'success')
+  }
+
+  function DeleteButton(id ,is_deleted) {
+    const [isOpen, setIsOpen] = useState(false);
+
+    if(!is_deleted){
+    
+      return (
+        // <Button variant="subtle" actionType="destructive" onClick={() => orderUpdate(id).then(setLoading(true))} >Cancel</Button>
+      <>
+        <Button onClick={() => setIsOpen(true)} variant="subtle" actionType="destructive">Delete Order</Button>
+
+        <Modal
+          actions={[
+            { text: 'Cancel', variant: 'subtle', onClick: () => setIsOpen(false) },
+            { text: 'Delete', onClick: () =>  orderDelete(id).then(setIsOpen(false)).then(setLoading(true)).then(DeleteAlert())},
+          ]}
+          header="Dialog Title"
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          closeOnEscKey={true}
+          closeOnClickOutside={false}
+          variant="dialog"
+        >
+          <Text>
+          Do you really want to delete order with id #{id} ?
+          </Text>
+        </Modal>
+      </>
+
+
+      )
+    }
+    else{
+      return <div>Order Deleted</div>
+    }
+  }
+
+  
+    
+
+  const columns=[
+      { header: 'Order Id', hash: 'id', render: ({ id }) => id },
+      { header: 'Billing Name', hash: 'billing_address', render: ({ billing_address }) =>`${ billing_address.first_name} ${billing_address.last_name}` },
+      { header: 'Order Total', hash: 'total_tax', render: ({ total_tax }) => total_tax },
+      { header: 'Order Status', hash: 'custom_status', render: ({ custom_status }) => custom_status },
+      { header: '', hash: 'stock', render: ({ id }) => <Button actionType="destructive" onClick={() => orderUpdate(id).then(setLoading(true))} >Cancel</Button> },
+      { header: '', hash: 'stockmm', render: ({ id , is_deleted}) => DeleteButton(id , is_deleted)  },
     ]
 
         
 
-    const onItemsPerPageChange = (newRange) => {
-      setCurrentPage(1);
-      setItemsPerPage(newRange);
-    };
+  const onItemsPerPageChange = (newRange) => {
+    setCurrentPage(1);
+    setItemsPerPage(newRange);
+  };
 
-  
-    useEffect(() => {
-    getList().then(items => {
-        setList(items);
-        const maxItems = currentPage * itemsPerPage;
-        const lastItem = Math.min(maxItems, items.length);
-        const firstItem = Math.max(0, maxItems - itemsPerPage);
-        setCurrentItems(items.slice(firstItem, lastItem));
-    }).then(() => setLoading(false))
-    }, [currentPage, itemsPerPage, loading]);
-  
-    return (
-      <>
-      { loading ? <Loader /> 
-      :
-      <Table
-        keyField="sku"
-        columns={columns}
-        items={currentItems}
-        itemName="Orders"
-        pagination={{
-          currentPage,
-          totalItems: data.length,
-          onPageChange: setCurrentPage,
-          itemsPerPageOptions,
-          onItemsPerPageChange,
-          itemsPerPage,
-        }}
-        stickyHeader
-      />
+
+  useEffect(() => {
+  getList().then(items => {
+      setList(items);
+      const maxItems = currentPage * itemsPerPage;
+      const lastItem = Math.min(maxItems, items.length);
+      const firstItem = Math.max(0, maxItems - itemsPerPage);
+      setCurrentItems(items.slice(firstItem, lastItem));
+  }).then(() => setLoading(false))
+  }, [currentPage, itemsPerPage, loading]);
+
+  return (
+    <>
+    <AlertsManager manager={alertsManager} />
+    {
+      loading ? <Loader />
+        :
+      <Panel header="Orders ">
+        <Table
+          keyField="sku"
+          columns={columns}
+          items={currentItems}
+          itemName="Orders"
+          pagination={{
+            currentPage,
+            totalItems: data.length,
+            onPageChange: setCurrentPage,
+            itemsPerPageOptions,
+            onItemsPerPageChange,
+            itemsPerPage,
+          }}
+          stickyHeader
+        />
+      </Panel>
     }
-    </>
-    );
-  }
+  </>
+  
+  );}
   
 
   export default OrderList;
