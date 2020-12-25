@@ -1,4 +1,4 @@
-import { Button, Table, Panel, Modal , Text, createAlertsManager , AlertsManager } from "@bigcommerce/big-design";
+import { Button, Table, Panel, Modal , Text, createAlertsManager , AlertsManager, Badge } from "@bigcommerce/big-design";
 import { useState, useEffect } from "react";
 import Loader from "./loader";
 
@@ -45,6 +45,25 @@ function AddAlert(title, details, type) {
 }
 
 
+
+
+function orderStatus(status){
+  switch(status) {
+    case 'Completed':
+      return (<Badge variant="success" label={status}/>)
+      break;
+    case 'Awaiting Fulfillment':
+      return (<Badge variant="secondary" label={status}/>)
+      break;
+    case 'Cancelled':
+      return (<Badge variant="danger" label={status}/>)
+      break;
+    default:
+      return (<Badge variant="secondary" label={status}/>)
+  }
+}
+
+
 function OrderList() {
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -86,8 +105,6 @@ function OrderList() {
           </Text>
         </Modal>
       </>
-
-
       )
     }
     else{
@@ -96,14 +113,25 @@ function OrderList() {
   }
 
   
-    
+  function UpdateButton(id ,status){
+    console.log(`status is ${status}`)
+    if(status === 'Cancelled' || status === 'Completed'){
+      return(
+        <div></div>
+      )
+    }else{
+      return(
+        <Button actionType="destructive" onClick={() => orderUpdate(id).then(setLoading(true))} >Cancel</Button>
+      )
+    }
+  }
 
   const columns=[
       { header: 'Order Id', hash: 'id', render: ({ id }) => id },
       { header: 'Billing Name', hash: 'billing_address', render: ({ billing_address }) =>`${ billing_address.first_name} ${billing_address.last_name}` },
       { header: 'Order Total', hash: 'total_tax', render: ({ total_tax }) => total_tax },
-      { header: 'Order Status', hash: 'custom_status', render: ({ custom_status }) => custom_status },
-      { header: '', hash: 'stock', render: ({ id }) => <Button actionType="destructive" onClick={() => orderUpdate(id).then(setLoading(true))} >Cancel</Button> },
+      { header: 'Order Status', hash: 'custom_status', render: ({ status }) => orderStatus(status) },
+      { header: '', hash: 'stock', render: ({ id ,status}) => UpdateButton(id ,status)},
       { header: '', hash: 'stockmm', render: ({ id , is_deleted}) => DeleteButton(id , is_deleted)  },
     ]
 
