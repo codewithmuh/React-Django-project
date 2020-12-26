@@ -47,19 +47,25 @@ function AddAlert(title, details, type) {
 
 
 
-function orderStatus(status){
-  switch(status) {
-    case 'Completed':
-      return (<Badge variant="success" label={status}/>)
-      break;
-    case 'Awaiting Fulfillment':
-      return (<Badge variant="secondary" label={status}/>)
-      break;
-    case 'Cancelled':
-      return (<Badge variant="danger" label={status}/>)
-      break;
-    default:
-      return (<Badge variant="secondary" label={status}/>)
+function orderStatus(status, is_deleted){
+  if(is_deleted){
+    return(
+    <div></div>
+    )
+  }else{
+    switch(status) {
+      case 'Completed':
+        return (<Badge variant="success" label={status}/>)
+        break;
+      case 'Awaiting Fulfillment':
+        return (<Badge variant="secondary" label={status}/>)
+        break;
+      case 'Cancelled':
+        return (<Badge variant="danger" label={status}/>)
+        break;
+      default:
+        return (<Badge variant="secondary" label={status}/>)
+    }
   }
 }
 
@@ -77,12 +83,15 @@ function OrderList() {
   function DeleteAlert(){
     AddAlert('Order Delete', 'Order Has Been Deleted Successfully!', 'success')
   }
+  function UpdateAlert(){
+    AddAlert('Order Update', 'Order Has Been Cancelled Successfully!', 'success')
+  }
+
 
   function DeleteButton(id ,is_deleted) {
     const [isOpen, setIsOpen] = useState(false);
 
     if(!is_deleted){
-    
       return (
         // <Button variant="subtle" actionType="destructive" onClick={() => orderUpdate(id).then(setLoading(true))} >Cancel</Button>
       <>
@@ -93,7 +102,7 @@ function OrderList() {
             { text: 'Cancel', variant: 'subtle', onClick: () => setIsOpen(false) },
             { text: 'Delete', onClick: () =>  orderDelete(id).then(setIsOpen(false)).then(setLoading(true)).then(DeleteAlert())},
           ]}
-          header="Dialog Title"
+          header="Warning"
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
           closeOnEscKey={true}
@@ -113,15 +122,36 @@ function OrderList() {
   }
 
   
-  function UpdateButton(id ,status){
-    console.log(`status is ${status}`)
-    if(status === 'Cancelled' || status === 'Completed'){
+  function UpdateButton(id ,status , is_deleted){
+    const [isOpen, setIsOpen] = useState(false);
+
+    if(status === 'Cancelled' || status === 'Completed' || is_deleted){
       return(
         <div></div>
       )
     }else{
       return(
-        <Button actionType="destructive" onClick={() => orderUpdate(id).then(setLoading(true))} >Cancel</Button>
+        <>
+          {/* <Button actionType="destructive" onClick={() => orderUpdate(id).then(setLoading(true))} >Cancel</Button> */}
+          <Button onClick={() => setIsOpen(true)} actionType="destructive">Cancel</Button>
+
+          <Modal
+            actions={[
+              { text: 'Cancel', variant: 'subtle', onClick: () => setIsOpen(false) },
+              { text: 'Delete', onClick: () =>  orderUpdate(id).then(setIsOpen(false)).then(setLoading(true)).then(UpdateAlert())},
+            ]}
+            header="Warning"
+            isOpen={isOpen}
+            onClose={() => setIsOpen(false)}
+            closeOnEscKey={true}
+            closeOnClickOutside={false}
+            variant="dialog"
+          >
+            <Text>
+            Are you sure you want to Cancel this order?
+            </Text>
+          </Modal>
+        </>
       )
     }
   }
@@ -130,8 +160,8 @@ function OrderList() {
       { header: 'Order Id', hash: 'id', render: ({ id }) => id },
       { header: 'Billing Name', hash: 'billing_address', render: ({ billing_address }) =>`${ billing_address.first_name} ${billing_address.last_name}` },
       { header: 'Order Total', hash: 'total_tax', render: ({ total_tax }) => total_tax },
-      { header: 'Order Status', hash: 'custom_status', render: ({ status }) => orderStatus(status) },
-      { header: '', hash: 'stock', render: ({ id ,status}) => UpdateButton(id ,status)},
+      { header: 'Order Status', hash: 'custom_status', render: ({ status, is_deleted}) => orderStatus(status, is_deleted) },
+      { header: '', hash: 'stock', render: ({ id ,status, is_deleted}) => UpdateButton(id ,status, is_deleted)},
       { header: '', hash: 'stockmm', render: ({ id , is_deleted}) => DeleteButton(id , is_deleted)  },
     ]
 
