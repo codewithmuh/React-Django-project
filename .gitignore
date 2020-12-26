@@ -6,6 +6,8 @@ __pycache__/
 # C extensions
 *.so
 
+
+React_DashBoard_dep/
 # Distribution / packaging
 .Python
 # build/
