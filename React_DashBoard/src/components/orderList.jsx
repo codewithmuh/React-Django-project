@@ -13,10 +13,12 @@ import Loader from "./loader";
 
 const alertsManager = createAlertsManager();
 
+// API GET call to orders
 function getList() {
   return fetch(`/bc-api/v2/orders`).then((data) => data.json());
 }
 
+// API POST call to update orders
 function orderUpdate(orderId) {
   return fetch(`/bc-api/v2/orders/${orderId}`, {
     method: "PUT",
@@ -27,6 +29,7 @@ function orderUpdate(orderId) {
   });
 }
 
+// API DELETE call to delete orders
 function orderDelete(orderId) {
   return fetch(`/bc-api/v2/orders/${orderId}`, {
     method: "DELETE",
@@ -36,6 +39,7 @@ function orderDelete(orderId) {
   });
 }
 
+// Function for Alerts
 function AddAlert(title, details, type) {
   const alert = {
     header: title,
@@ -51,6 +55,7 @@ function AddAlert(title, details, type) {
   return alertsManager.add(alert);
 }
 
+// Function To order status
 function orderStatus(status, is_deleted) {
   if (is_deleted) {
     return <div></div>;
@@ -79,9 +84,14 @@ function OrderList() {
   const [loading, setLoading] = useState(true);
   const [data, setList] = useState([]);
 
+  // Function to Generate Delete Alert
+
   function DeleteAlert() {
     AddAlert("Order Delete", "Order Has Been Deleted Successfully!", "success");
   }
+
+  // Function to Generate Update Alert
+
   function UpdateAlert() {
     AddAlert(
       "Order Update",
@@ -89,6 +99,7 @@ function OrderList() {
       "success"
     );
   }
+  // Function to Generate Delete Button
 
   function DeleteButton(id, is_deleted) {
     const [isOpen, setIsOpen] = useState(false);
@@ -135,6 +146,8 @@ function OrderList() {
       return <div>Order Deleted</div>;
     }
   }
+
+  // Function to Generate Update Button
 
   function UpdateButton(id, status, is_deleted) {
     const [isOpen, setIsOpen] = useState(false);
@@ -198,13 +211,13 @@ function OrderList() {
     },
     {
       header: "",
-      hash: "stock",
+      hash: "update",
       render: ({ id, status, is_deleted }) =>
         UpdateButton(id, status, is_deleted),
     },
     {
       header: "",
-      hash: "stockmm",
+      hash: "delete",
       render: ({ id, is_deleted }) => DeleteButton(id, is_deleted),
     },
   ];

@@ -5,7 +5,7 @@ import json
 from decouple import config, Csv
 
 
-
+# Function to GET BigComerce Orders 
 def orders(request):
 
     url = 'https://api.bigcommerce.com/stores/' + config('apiStoreHash') + '/v2/orders'
@@ -13,7 +13,7 @@ def orders(request):
     r = requests.get(url, headers=headers)
     return HttpResponse(r)
 
-
+# Function to Update/Delete BigComerce Order 
 @csrf_exempt
 def order(request, id):
         
@@ -39,7 +39,7 @@ def order(request, id):
     
 
 
-       
+# Function to GET BigComerce Catalog Summary        
 @csrf_exempt
 def resources(request):
     url = 'https://api.bigcommerce.com/stores/' + config('apiStoreHash') + '/v3/catalog/summary'
@@ -48,7 +48,7 @@ def resources(request):
     return HttpResponse(r)
 
 
-
+# Function to Update/Delete BigComerce Catalog Summary        
 @csrf_exempt
 def resource(request, id):
     if(request.method == "PUT"):
@@ -74,7 +74,7 @@ def resource(request, id):
 
 
 
-
+# Function to GET BigComerce Store
 @csrf_exempt
 def store(request):
     url = 'https://api.bigcommerce.com/stores/' + config('apiStoreHash') + '/v2/store'

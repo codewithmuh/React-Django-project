@@ -2,10 +2,11 @@ import { Panel, Text, Flex, H2 } from "@bigcommerce/big-design";
 import { useState, useEffect } from "react";
 import Loader from "./loader";
 
+// API Get Request to store
 function getStore() {
   return fetch("/bc-api/v2/store").then((store) => store.json());
 }
-
+// API Get Request to store Summary
 function getCatalog() {
   return fetch("/bc-api/v3/catalog/summary").then((store) => store.json());
 }

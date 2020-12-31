@@ -17,7 +17,7 @@ def client_id():
 
 
 
-
+#function to check Callback
 def auth(request):
 
     if request.GET.get('code') and request.GET.get('context') and request.GET.get('scope'):
