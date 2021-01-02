@@ -85,7 +85,9 @@ export default function Summary() {
               display="inline"
             >
               <Text>INVENTORY VALUE</Text>
-              <p style={{ fontSize: "2rem" }}>{catalog.data.inventory_value}</p>
+              <p style={{ fontSize: "2rem" }}>
+                {catalog.currency_symbol} {catalog.data.inventory_value}
+              </p>
             </Box>
           </Grid>
         </Panel>
