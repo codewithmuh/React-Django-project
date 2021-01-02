@@ -1,4 +1,4 @@
-import { Panel, Text, Flex, H2 } from "@bigcommerce/big-design";
+import { Panel, Text, Box, Grid } from "@bigcommerce/big-design";
 import { useState, useEffect } from "react";
 import Loader from "./loader";
 
@@ -31,7 +31,7 @@ export default function Summary() {
         <Loader />
       ) : (
         <Panel
-          header="Stor Overview"
+          header="Store Overview"
           action={{
             variant: "secondary",
             text: "View Storefront",
@@ -40,29 +40,54 @@ export default function Summary() {
             },
           }}
         >
-          <Panel>
+          <Box
+            backgroundColor="white"
+            border="box"
+            borderRadius="normal"
+            padding="medium"
+          >
             <Text>Domain</Text>
-            {store.domain}
-          </Panel>
+            <p>{store.domain}</p>
+          </Box>
         </Panel>
       )}
 
       {catalog.data && (
         <Panel header="Catalog Summary">
-          <Flex justifyContent="space-between">
-            <Panel>
+          <p>A simple overview of your catalog.</p>
+
+          <Grid gridColumns="repeat(3, 1fr)">
+            <Box
+              backgroundColor="white"
+              border="box"
+              borderRadius="normal"
+              padding="medium"
+              display="inline"
+            >
               <Text>VARIANT COUNT</Text>
-              <H2>{catalog.data.variant_count}</H2>
-            </Panel>
-            <Panel>
+              <p style={{ fontSize: "2rem" }}>{catalog.data.variant_count}</p>
+            </Box>
+            <Box
+              backgroundColor="white"
+              border="box"
+              borderRadius="normal"
+              padding="medium"
+              display="inline"
+            >
               <Text>INVENTORY COUNT</Text>
-              <H2>{catalog.data.inventory_count}</H2>
-            </Panel>
-            <Panel>
+              <p style={{ fontSize: "2rem" }}>{catalog.data.inventory_count}</p>
+            </Box>
+            <Box
+              backgroundColor="white"
+              border="box"
+              borderRadius="normal"
+              padding="medium"
+              display="inline"
+            >
               <Text>INVENTORY VALUE</Text>
-              <H2>{catalog.data.inventory_value}</H2>
-            </Panel>
-          </Flex>
+              <p style={{ fontSize: "2rem" }}>{catalog.data.inventory_value}</p>
+            </Box>
+          </Grid>
         </Panel>
       )}
     </>

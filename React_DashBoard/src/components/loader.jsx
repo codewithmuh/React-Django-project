@@ -1,9 +1,15 @@
 import React from "react";
-import "./loader.css";
+import { Flex, ProgressCircle } from "@bigcommerce/big-design";
 
 // Loader Genration
 export default class Loader extends React.Component {
   render() {
-    return <div className="loader"></div>;
+    return (
+      <div>
+        <Flex justifyContent="center" style={{ marginTop: "35vh" }}>
+          <ProgressCircle size="large" />
+        </Flex>
+      </div>
+    );
   }
 }
