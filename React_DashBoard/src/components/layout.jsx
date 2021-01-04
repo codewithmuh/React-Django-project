@@ -30,7 +30,7 @@ function Layout() {
       <div style={{ marginLeft: "50px" }}>
         <Tabs activeTab={activeTab} items={items} onTabClick={setActiveTab} />
       </div>
-      <div style={{ marginLeft: "50px" }}>
+      <div style={{ marginLeft: "50px", marginRight: "50px" }}>
         <Box marginTop="large">
           {activeTab === "tab1" && <Summary />}
           {activeTab === "tab2" && <OrderList />}
