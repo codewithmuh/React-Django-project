@@ -25,7 +25,7 @@ def auth(request):
         context = request.GET.get('context')
         scope = request.GET.get('scope')
         redirect = config('callBackURL')
-        
+
         store_hash = context.split('/')[1]
 
         client = BigcommerceApi(client_id=client_id(), store_hash=config('apiStoreHash'))
@@ -34,12 +34,10 @@ def auth(request):
         bc_user_id = token['user']['id']
         email = token['user']['email']
         access_token = token['access_token']
-        pp = request.build_absolute_uri() 
+        pp = request.build_absolute_uri()
         print('this is url   ' + pp)
         # b = Auth.objects.create(user_id = bc_user_id ,mail = email, storehash = store_hash, token = access_token)
 
         return render(request , 'index.html')
 
     return HttpResponse("Something Went Wrong")
-    
- 
