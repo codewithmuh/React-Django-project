@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.http import  HttpResponse
 
-
 from bigcommerce.api import BigcommerceApi
 from decouple import config, Csv
 
@@ -16,7 +15,6 @@ def dashBoard(request):
         signed_payload = request.GET.get('signed_payload')
         a = BigcommerceApi.oauth_verify_payload(signed_payload, client_secret())
         print(a)
-        return render(request ,'index.html')
-        
+    return render(request ,'index.html')
+
     return HttpResponse('Some thing Went Wrong')
-    

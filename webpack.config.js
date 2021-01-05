@@ -1,12 +1,14 @@
 const path = require('path');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
-const { template } = require('babel-core');
+// const { template } = require('babel-core');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+
 
 
 module.exports = {
     entry: './src/index.js',
     output:{
-        path: path.join(__dirname, 'build'),
+        path: path.join(__dirname, 'dist'),
         filename: 'bundle.js'
     },
     module: {
@@ -23,7 +25,9 @@ module.exports = {
     },
     plugins: [
         new HtmlwebpackPlugin({
-            template: './src/index.html'
-        })
-    ]
+            inlineSource: '.(js|css)$'
+        }),
+        new ScriptExtHtmlWebpackPlugin({
+            inline: [/\.js$/],
+        })    ]
 }
