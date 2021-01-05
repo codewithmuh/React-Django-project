@@ -1,7 +1,7 @@
+import React from 'react';
 import { Panel, Text, Box, Grid } from "@bigcommerce/big-design";
 import { useState, useEffect } from "react";
 import Loader from "./loader";
-
 // API Get Request to store
 function getStore() {
   return fetch("/bc-api/v2/store").then((store) => store.json());
@@ -26,7 +26,7 @@ export default function Summary() {
   }, [store.id, catalog.id]);
 
   return (
-    <>
+    <React.Fragment>
       {store.length === 0 ? (
         <Loader />
       ) : (
@@ -92,6 +92,6 @@ export default function Summary() {
           </Grid>
         </Panel>
       )}
-    </>
+    </React.Fragment>
   );
 }

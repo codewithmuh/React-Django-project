@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Button,
   Table,
@@ -106,7 +107,7 @@ function OrderList() {
 
     if (!is_deleted) {
       return (
-        <>
+        <React.Fragment>
           <Button
             onClick={() => setIsOpen(true)}
             variant="subtle"
@@ -140,7 +141,7 @@ function OrderList() {
           >
             <Text>Do you really want to delete order with id #{id} ?</Text>
           </Modal>
-        </>
+        </React.Fragment>
       );
     } else {
       return <div>Order Deleted</div>;
@@ -156,7 +157,7 @@ function OrderList() {
       return <div></div>;
     } else {
       return (
-        <>
+        <React.Fragment>
           <Button onClick={() => setIsOpen(true)} actionType="destructive">
             Cancel
           </Button>
@@ -186,7 +187,7 @@ function OrderList() {
           >
             <Text>Are you sure you want to Cancel this order?</Text>
           </Modal>
-        </>
+        </React.Fragment>
       );
     }
   }
@@ -240,7 +241,7 @@ function OrderList() {
   }, [currentPage, itemsPerPage, loading]);
 
   return (
-    <>
+    <React.Fragment>
       <AlertsManager manager={alertsManager} />
       {loading ? (
         <Loader />
@@ -263,7 +264,7 @@ function OrderList() {
           />
         </Panel>
       )}
-    </>
+    </React.Fragment>
   );
 }
 
