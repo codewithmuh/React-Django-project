@@ -1,4 +1,3 @@
-import React from 'react';
 import { Tabs, Box } from "@bigcommerce/big-design";
 import { useState } from "react";
 import OrderList from "./orderList";

@@ -13,7 +13,6 @@ React_DashBoard_dep_new/
 # Distribution / packaging
 .Python
 build/
-React_DashBoard/build/
 develop-eggs/
 dist/
 downloads/
