@@ -26,8 +26,8 @@ def auth(request):
         context = request.GET.get('context')
         scope = request.GET.get('scope')
 
-        redirect = 'https://inventroman.herokuapp.com/cb/auth'
-        # redirect = config('callBackURL')
+        # redirect = 'https://inventroman.herokuapp.com/cb/auth'
+        redirect = config('callBackURL')
 
 
         store_hash = context.split('/')[1]
