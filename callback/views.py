@@ -42,8 +42,7 @@ def auth(request):
         # auth.storehash = store_hash
         # auth.token = access_token
         # auth.save()
-
-
+        
         return render(request , 'index.html')
 
     return HttpResponse("Something Went Wrong")
