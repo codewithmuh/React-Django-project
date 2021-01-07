@@ -14,7 +14,7 @@ def client_secret():
     return config('appClientSecret')
 
 def authKey(request):
-    signed_payload = request.get('signed_payload')
+    signed_payload = request.GET.('signed_payload')
     a = BigcommerceApi.oauth_verify_payload(signed_payload, client_secret())
     store_hash = a['store_hash']
     obj = get_object_or_404(Auth, storehash=store_hash)
