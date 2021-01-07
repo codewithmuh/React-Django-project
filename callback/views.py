@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import  HttpResponse
+from .models import Auth
 import requests
 import datetime
 
@@ -34,9 +35,14 @@ def auth(request):
         bc_user_id = token['user']['id']
         email = token['user']['email']
         access_token = token['access_token']
-        pp = request.build_absolute_uri()
-        print('this is url   ' + pp)
-        # b = Auth.objects.create(user_id = bc_user_id ,mail = email, storehash = store_hash, token = access_token)
+                
+        auth , created = Auth.objects.get_or_create(storehash = store_hash)
+        auth.user_id = bc_user_id
+        auth.mail = email
+        auth.storehash = store_hash
+        auth.token = access_token
+        auth.save()
+
 
         return render(request , 'index.html')
 
