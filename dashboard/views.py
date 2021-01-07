@@ -16,6 +16,6 @@ def dashBoard(request):
         a = BigcommerceApi.oauth_verify_payload(signed_payload, client_secret())
         store_hash = a['store_hash']
         print(store_hash)
-        return render(request ,'index.html')
+    return render(request ,'index.html')
 
     return HttpResponse('Some thing Went Wrong')
