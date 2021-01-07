@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('' , include('dashboard.urls')),
     path('bc-api/' , include('api.urls')),
-    path('cb/' , include('callback.urls'))
+    path('' , include('callback.urls'))
 
 
 ]
