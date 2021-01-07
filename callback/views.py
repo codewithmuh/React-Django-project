@@ -34,7 +34,7 @@ def auth(request):
 
         client = BigcommerceApi(client_id=client_id(), store_hash=config('apiStoreHash'))
 
-        # token = client.oauth_fetch_token(client_secret(), code, context, scope, redirect)
+        token = client.oauth_fetch_token(client_secret(), code, context, scope, redirect)
         # bc_user_id = token['user']['id']
         # email = token['user']['email']
         # access_token = token['access_token']
