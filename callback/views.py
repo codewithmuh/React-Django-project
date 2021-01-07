@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import  HttpResponse
+from .models import Auth
 import requests
 import datetime
 
@@ -24,7 +25,10 @@ def auth(request):
         code = request.GET.get('code')
         context = request.GET.get('context')
         scope = request.GET.get('scope')
+
+        # redirect = 'https://dd6100868f41.ngrok.io/auth'
         redirect = config('callBackURL')
+
 
         store_hash = context.split('/')[1]
 
@@ -34,12 +38,14 @@ def auth(request):
         bc_user_id = token['user']['id']
         email = token['user']['email']
         access_token = token['access_token']
-        pp = request.build_absolute_uri()
-        print('this is url   ' + pp)
-        # b = Auth.objects.create(user_id = bc_user_id ,mail = email, storehash = store_hash, token = access_token)
 
-        return render(request , 'auth.html')
+        a , created = Auth.objects.get_or_create(storehash = store_hash)
+        a.user_id = bc_user_id
+        a.mail = email
+        a.storehash = store_hash
+        a.token = access_token
+        a.save()
+
+        return render(request , 'index.html')
 
     return HttpResponse("Something Went Wrong")
-
- 
