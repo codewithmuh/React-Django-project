@@ -39,12 +39,12 @@ def auth(request):
         email = token['user']['email']
         access_token = token['access_token']
                 
-        # auth , created = Auth.objects.get_or_create(storehash = store_hash)
-        # auth.user_id = bc_user_id
-        # auth.mail = email
-        # auth.storehash = store_hash
-        # auth.token = access_token
-        # auth.save()
+        a , created = Auth.objects.get_or_create(storehash = store_hash)
+        a.user_id = bc_user_id
+        a.mail = email
+        a.storehash = store_hash
+        a.token = access_token
+        a.save()
 
         return render(request , 'index.html')
 
