@@ -25,7 +25,10 @@ def auth(request):
         code = request.GET.get('code')
         context = request.GET.get('context')
         scope = request.GET.get('scope')
-        redirect = config('callBackURL')
+
+        redirect = 'https://inventroman.herokuapp.com/cb/auth'
+        # redirect = config('callBackURL')
+
 
         store_hash = context.split('/')[1]
 
@@ -42,7 +45,7 @@ def auth(request):
         # auth.storehash = store_hash
         # auth.token = access_token
         # auth.save()
-        
+
         return render(request , 'index.html')
 
     return HttpResponse("Something Went Wrong")
