@@ -35,16 +35,16 @@ def auth(request):
         client = BigcommerceApi(client_id=client_id(), store_hash=config('apiStoreHash'))
 
         token = client.oauth_fetch_token(client_secret(), code, context, scope, redirect)
-        # bc_user_id = token['user']['id']
-        # email = token['user']['email']
-        # access_token = token['access_token']
+        bc_user_id = token['user']['id']
+        email = token['user']['email']
+        access_token = token['access_token']
 
-        # a , created = Auth.objects.get_or_create(storehash = store_hash)
-        # a.user_id = bc_user_id
-        # a.mail = email
-        # a.storehash = store_hash
-        # a.token = access_token
-        # a.save()
+        a , created = Auth.objects.get_or_create(storehash = store_hash)
+        a.user_id = bc_user_id
+        a.mail = email
+        a.storehash = store_hash
+        a.token = access_token
+        a.save()
 
         return render(request , 'index.html')
 
