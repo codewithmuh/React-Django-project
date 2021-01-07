@@ -3,10 +3,29 @@ from django.views.decorators.csrf import csrf_exempt
 import requests
 import json
 from decouple import config, Csv
+from callback.models import Auth
+from django.shortcuts import get_object_or_404
+
+
+
+def authKey(request):
+    signed_payload = request.GET.get('signed_payload')
+    a = BigcommerceApi.oauth_verify_payload(signed_payload, client_secret())
+    store_hash = a['store_hash']
+    obj = get_object_or_404(Auth, storehash=store_hash)
+    token = obj.token
+    print(token)
+
+
+
+
+
 
 
 # Function to GET BigComerce Orders 
 def orders(request):
+
+    authKey(request)
 
     url = 'https://api.bigcommerce.com/stores/' + config('apiStoreHash') + '/v2/orders'
     headers = {'X-Auth-Token':  config('apiToken') , 'Accept': 'application/json', 'host':'api.bigcommerce.com'  ,'Content-Type': 'application/json'}
