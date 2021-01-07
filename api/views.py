@@ -8,7 +8,8 @@ from django.shortcuts import get_object_or_404
 from bigcommerce.api import BigcommerceApi
 
 
-
+def client_secret():
+    return config('appClientSecret')
 
 def authKey(request):
     signed_payload = request.GET.get('signed_payload')
