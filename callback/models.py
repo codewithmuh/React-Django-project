@@ -8,4 +8,4 @@ class Auth(models.Model):
 
 
     def __str__(self):
-        return str(self.mail)
+        return str(self.storehash)
