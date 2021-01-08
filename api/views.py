@@ -6,53 +6,42 @@ from decouple import config, Csv
 from callback.models import Auth
 from django.shortcuts import get_object_or_404
 from bigcommerce.api import BigcommerceApi
-import datetime
 
 
 
-def client_secret():
-    return config('appClientSecret')
+def authHeader(request):
+    __store_hash = request.session.__getitem__('__store_hash')
 
-def authKey(request):
-    signed_payload = request.GET.get('signed_payload')
-    # a = BigcommerceApi.oauth_verify_payload(signed_payload, client_secret())
-    # store_hash = a['store_hash']
-    # obj = get_object_or_404(Auth, storehash=store_hash)
-    # token = obj.token
-    print(signed_payload)
-
-
+    authData = get_object_or_404(Auth, storehash = __store_hash)
+    token = authData.token
+    headers = {'X-Auth-Token':  token , 'Accept': 'application/json', 'host':'api.bigcommerce.com'  ,'Content-Type': 'application/json'}
+    return __store_hash , headers
 
 
 
 # Function to GET BigComerce Orders 
 def orders(request):
-    authKey(request)
-    url = 'https://api.bigcommerce.com/stores/' + config('apiStoreHash') + '/v2/orders'
-    headers = {'X-Auth-Token':  config('apiToken') , 'Accept': 'application/json', 'host':'api.bigcommerce.com'  ,'Content-Type': 'application/json'}
+
+    __store_hash , headers = authHeader(request)
+    url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v2/orders'
     r = requests.get(url, headers=headers)
     return HttpResponse(r)
 
 # Function to Update/Delete BigComerce Order 
 @csrf_exempt
 def order(request, id):
-        
+    __store_hash , headers = authHeader(request)
+    url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v2/orders/{}'.format(id)
     if(request.method == "PUT"):
-
-        url = 'https://api.bigcommerce.com/stores/' + config('apiStoreHash') + '/v2/orders/{}'.format(id)
-        headers = {'X-Auth-Token':  config('apiToken') , 'Accept': 'application/json', 'host':'api.bigcommerce.com'  ,'Content-Type': 'application/json'}
         body = json.loads(request.body)
         r = requests.put(url, headers=headers , json =body)
         return HttpResponse(r.content)
 
     if(request.method == "DELETE"):
-        url = 'https://api.bigcommerce.com/stores/' + config('apiStoreHash') + '/v2/orders/{}'.format(id)
-        headers = {'X-Auth-Token':  config('apiToken') , 'Accept': 'application/json', 'host':'api.bigcommerce.com'  ,'Content-Type': 'application/json'}
         r = requests.delete(url, headers=headers )
         return HttpResponse(r)
 
-    url = 'https://api.bigcommerce.com/stores/' + config('apiStoreHash') + '/v2/orders/{}'.format(id)
-    headers = {'X-Auth-Token':  config('apiToken') , 'Accept': 'application/json', 'host':'api.bigcommerce.com'  ,'Content-Type': 'application/json'}
+
     r = requests.get(url, headers=headers )
     return HttpResponse(r)
 
@@ -62,8 +51,8 @@ def order(request, id):
 # Function to GET BigComerce Catalog Summary        
 @csrf_exempt
 def resources(request):
-    url = 'https://api.bigcommerce.com/stores/' + config('apiStoreHash') + '/v3/catalog/summary'
-    headers = {'X-Auth-Token':  config('apiToken') , 'Accept': 'application/json', 'host':'api.bigcommerce.com'  ,'Content-Type': 'application/json'}
+    __store_hash , headers = authHeader(request)
+    url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v3/catalog/summary'
     r = requests.get(url, headers=headers)
     return HttpResponse(r)
 
@@ -71,23 +60,17 @@ def resources(request):
 # Function to Update/Delete BigComerce Catalog Summary        
 @csrf_exempt
 def resource(request, id):
+    __store_hash , headers = authHeader(request)
+    url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v3/catalog/summary/{}'.format(id)
+    body = json.loads(request.body)
     if(request.method == "PUT"):
-        url = 'https://api.bigcommerce.com/stores/' + config('apiStoreHash') + '/v3/catalog/summary/{}'.format(id)
-        headers = {'X-Auth-Token':  config('apiToken') , 'Accept': 'application/json', 'host':'api.bigcommerce.com'  ,'Content-Type': 'application/json'}
-        body = json.loads(request.body)
         r = requests.put(url, headers=headers , json =body)
         return HttpResponse(r.content)
 
     if(request.method == "DELETE"):
-        url = 'https://api.bigcommerce.com/stores/' + config('apiStoreHash') + '/v3/catalog/summary/{}'.format(id)
-        headers = {'X-Auth-Token':  config('apiToken') , 'Accept': 'application/json', 'host':'api.bigcommerce.com'  ,'Content-Type': 'application/json'}
-        body = json.loads(request.body)
         r = requests.delete(url, headers=headers , json =body)
         return HttpResponse(r.content)
     
-    url = 'https://api.bigcommerce.com/stores/' + config('apiStoreHash') + '/v3/catalog/summary/{}'.format(id)
-    headers = {'X-Auth-Token':  config('apiToken') , 'Accept': 'application/json', 'host':'api.bigcommerce.com'  ,'Content-Type': 'application/json'}
-    body = json.loads(request.body)
     r = requests.delete(url, headers=headers , json =body)
     return HttpResponse(r.content)
 
@@ -97,8 +80,8 @@ def resource(request, id):
 # Function to GET BigComerce Store
 @csrf_exempt
 def store(request):
-    url = 'https://api.bigcommerce.com/stores/' + config('apiStoreHash') + '/v2/store'
-    headers = {'X-Auth-Token': config('apiToken') , 'Accept': 'application/json', 'host':'api.bigcommerce.com'  ,'Content-Type': 'application/json'}
+    __store_hash , headers = authHeader(request)
+    url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v2/store'
     r = requests.get(url, headers=headers)
     return HttpResponse(r)
 
