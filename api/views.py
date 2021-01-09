@@ -11,6 +11,14 @@ import url64
 import json
 
 
+def headers(storehash){
+
+    authData = get_object_or_404(Auth, storehash = storehash)
+    token = authData.token
+    headers = {'X-Auth-Token':  token , 'Accept': 'application/json', 'host':'api.bigcommerce.com'  ,'Content-Type': 'application/json'}
+    return  headers
+}
+
 
 def authHeader(request , signed_payload):
     print('lorem lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum ipsum')
@@ -105,12 +113,11 @@ def resource(request, id):
 # Function to GET BigComerce Store
 @csrf_exempt
 def store(request):
-    print('request  requestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequest')
-    print(request.GET)
-    if request.GET.get('signed_payload'):
-        signed_payload = request.GET.get('signed_payload')
-        __store_hash , headers = authHeader(request , signed_payload)
-        url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v2/store'
+    if request.GET.get('store_hash'):
+        store_hash = request.GET.get('store_hash')
+
+        headers = headers(store_hash)
+        url = 'https://api.bigcommerce.com/stores/' + store_hash + '/v2/store'
         r = requests.get(url, headers=headers)
         return HttpResponse(r)
 
