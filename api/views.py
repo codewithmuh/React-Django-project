@@ -13,7 +13,7 @@ import json
 
 
 def authHeader(request ):
-    payload = request.GET.get('payload'):
+    payload = request.GET.get('payload')
     x = signed_payload.split("=")
     y = x[1].split(".")
     decoded = url64.decode(y[0])
