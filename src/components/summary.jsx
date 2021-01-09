@@ -2,19 +2,19 @@ import { Panel, Text, Box, Grid } from "@bigcommerce/big-design";
 import { useState, useEffect } from "react";
 import Loader from "./loader";
 
-const store_hash = "4zjutairi8";
+const payload = window.location.search;
 
 // API Get Request to store
 function getStore() {
-  return fetch(`/bc-api/v2/store/?store_hash=${store_hash}`).then((store) =>
+  return fetch(`/bc-api/v2/store/?payload=${payload}`).then((store) =>
     store.json()
   );
 }
 // API Get Request to store Summary
 function getCatalog() {
-  return fetch(
-    `/bc-api/v3/catalog/summary/?store_hash=${store_hash}`
-  ).then((store) => store.json());
+  return fetch(`/bc-api/v3/catalog/summary/?payload=${payload}`).then((store) =>
+    store.json()
+  );
 }
 
 export default function Summary() {
