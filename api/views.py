@@ -41,7 +41,7 @@ def authHeader(request , signed_payload):
 def orders(request):
      if request.GET.get('signed_payload'):
         signed_payload = request.GET.get('signed_payload')
-        __store_hash , headers = authHeader(request)
+        __store_hash , headers = authHeader(request, signed_payload)
         url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v2/orders'
         r = requests.get(url, headers=headers)
         return HttpResponse(r)
@@ -51,7 +51,7 @@ def orders(request):
 def order(request, id):
      if request.GET.get('signed_payload'):
         signed_payload = request.GET.get('signed_payload')
-        __store_hash , headers = authHeader(request)
+        __store_hash , headers = authHeader(request , signed_payload)
         url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v2/orders/{}'.format(id)
         if(request.method == "PUT"):
             body = json.loads(request.body)
@@ -74,7 +74,7 @@ def order(request, id):
 def resources(request):
      if request.GET.get('signed_payload'):
         signed_payload = request.GET.get('signed_payload')
-        __store_hash , headers = authHeader(request)
+        __store_hash , headers = authHeader(request, signed_payload)
         url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v3/catalog/summary'
         r = requests.get(url, headers=headers)
         return HttpResponse(r)
@@ -85,7 +85,7 @@ def resources(request):
 def resource(request, id):
      if request.GET.get('signed_payload'):
         signed_payload = request.GET.get('signed_payload')
-        __store_hash , headers = authHeader(request)
+        __store_hash , headers = authHeader(request, signed_payload)
         url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v3/catalog/summary/{}'.format(id)
         body = json.loads(request.body)
         if(request.method == "PUT"):
