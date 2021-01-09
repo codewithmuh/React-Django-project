@@ -15,7 +15,7 @@ import json
 def authHeader(request):
 
     signed_payload = request.GET.get('signed_payload')
-
+    print("lorem ispdum lorem ispdumlorem ispdumlorem ispdumlorem ispdumlorem ispdumlorem ispdum")
     signed_payload_split = signed_payload.split(".")
     signed_payload_split_decoded = url64.decode(signed_payload_split[0])
 
