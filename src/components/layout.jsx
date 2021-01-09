@@ -11,9 +11,6 @@ function Layout() {
     { id: "tab2", title: "Order List" },
   ];
 
-  const domain = window.location.search;
-  console.log(domain);
-
   return (
     <div style={{ backgroundColor: "#F6F7F9", height: "100vh" }}>
       <div style={{ marginLeft: "50px" }}>

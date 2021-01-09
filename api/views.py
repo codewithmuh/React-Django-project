@@ -12,7 +12,7 @@ import json
 
 
 
-def authHeader(request ):
+def authData(request ):
     payload = request.GET.get('payload')
     x = payload.split("=")
     y = x[1].split(".")
@@ -30,7 +30,7 @@ def authHeader(request ):
 
 # Function to GET BigComerce Orders 
 def orders(request):
-    __store_hash , headers = authHeader(request)
+    __store_hash , headers = authData(request)
     url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v2/orders'
     r = requests.get(url, headers=headers)
     return HttpResponse(r)
@@ -38,7 +38,7 @@ def orders(request):
 # Function to Update/Delete BigComerce Order 
 @csrf_exempt
 def order(request, id):
-    __store_hash , headers = authHeader(request)
+    __store_hash , headers = authData(request)
     url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v2/orders/{}'.format(id)
     if(request.method == "PUT"):
         body = json.loads(request.body)
@@ -59,7 +59,7 @@ def order(request, id):
 # Function to GET BigComerce Catalog Summary        
 @csrf_exempt
 def resources(request):
-    __store_hash , headers = authHeader(request)
+    __store_hash , headers = authData(request)
     url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v3/catalog/summary'
     r = requests.get(url, headers=headers)
     return HttpResponse(r)
@@ -68,7 +68,7 @@ def resources(request):
 # Function to Update/Delete BigComerce Catalog Summary        
 @csrf_exempt
 def resource(request, id):
-    __store_hash , headers = authHeader(request)
+    __store_hash , headers = authData(request)
     url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v3/catalog/summary/{}'.format(id)
     body = json.loads(request.body)
     if(request.method == "PUT"):
@@ -88,7 +88,7 @@ def resource(request, id):
 # Function to GET BigComerce Store
 @csrf_exempt
 def store(request):
-    __store_hash , headers = authHeader(request)
+    __store_hash , headers = authData(request)
     url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v2/store'
     r = requests.get(url, headers=headers)
     return HttpResponse(r)

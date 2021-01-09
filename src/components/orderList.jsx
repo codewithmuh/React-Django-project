@@ -12,15 +12,18 @@ import { useState, useEffect } from "react";
 import Loader from "./loader";
 
 const alertsManager = createAlertsManager();
+const payload = window.location.search;
 
 // API GET call to orders
 function getList() {
-  return fetch(`/bc-api/v2/orders`).then((data) => data.json());
+  return fetch(`/bc-api/v2/orders/?payload=${payload}`).then((data) =>
+    data.json()
+  );
 }
 
 // API POST call to update orders
 function orderUpdate(orderId) {
-  return fetch(`/bc-api/v2/orders/${orderId}`, {
+  return fetch(`/bc-api/v2/orders/${orderId}/?payload=${payload}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -31,7 +34,7 @@ function orderUpdate(orderId) {
 
 // API DELETE call to delete orders
 function orderDelete(orderId) {
-  return fetch(`/bc-api/v2/orders/${orderId}`, {
+  return fetch(`/bc-api/v2/orders/${orderId}/?payload=${payload}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
