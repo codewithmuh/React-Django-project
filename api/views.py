@@ -12,8 +12,7 @@ import json
 
 
 
-def authHeader(request):
-    signed_payload = request.GET.get('signed_payload')
+def authHeader(request , signed_payload):
     print('lorem lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum ipsum')
     print(signed_payload)
     # signed_payload='eyJ1c2VyIjp7ImlkIjoxODIyOTg1LCJlbWFpbCI6InJhc2hpZGRhaGE4MEBnbWFpbC5jb20ifSwib3duZXIiOnsiaWQiOjE4MjI5ODUsImVtYWlsIjoicmFzaGlkZGFoYTgwQGdtYWlsLmNvbSJ9LCJjb250ZXh0Ijoic3RvcmVzLzR6anV0YWlyaTgiLCJzdG9yZV9oYXNoIjoiNHpqdXRhaXJpOCIsInRpbWVzdGFtcCI6MTYxMDE4NDIyOS4yNDI5MzJ9.MzZlZWQ2MjQxMWVmYWFjMWE4ZDVkN2NiZmVkNzZkZGRjY2ZkZWU5MTMwMDMxZjM0ZmIyZTY5NTQyZTgyNDM0Zg%3D%3D'
@@ -99,9 +98,11 @@ def resource(request, id):
 # Function to GET BigComerce Store
 @csrf_exempt
 def store(request):
-    __store_hash , headers = authHeader(request)
-    url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v2/store'
-    r = requests.get(url, headers=headers)
-    return HttpResponse(r)
+    if request.GET.get('signed_payload'):
+        signed_payload = request.GET.get('signed_payload')
+        __store_hash , headers = authHeader(request , signed_payload)
+        url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v2/store'
+        r = requests.get(url, headers=headers)
+        return HttpResponse(r)
 
 
