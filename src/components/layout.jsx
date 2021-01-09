@@ -11,7 +11,7 @@ function Layout() {
     { id: "tab2", title: "Order List" },
   ];
 
-  const domain = window.location.href;
+  const domain = window.location.search;
   console.log(domain);
 
   return (
