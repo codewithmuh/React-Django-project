@@ -7,10 +7,20 @@ from callback.models import Auth
 from django.shortcuts import get_object_or_404
 from bigcommerce.api import BigcommerceApi
 
+import url64
+import json
+
 
 
 def authHeader(request):
-    __store_hash = request.session.__getitem__('__store_hash')
+
+    signed_payload = request.GET.get('signed_payload')
+
+    signed_payload_split = signed_payload.split(".")
+    signed_payload_split_decoded = url64.decode(signed_payload_split[0])
+
+    signed_payload_json = json.loads(signed_payload_split_decoded)
+    __store_hash =signed_payload_json["store_hash"]
 
     authData = get_object_or_404(Auth, storehash = __store_hash)
     token = authData.token
