@@ -2,7 +2,7 @@ import { Panel, Text, Box, Grid } from "@bigcommerce/big-design";
 import { useState, useEffect } from "react";
 import Loader from "./loader";
 
-store_hash = "4zjutairi8";
+const store_hash = "4zjutairi8";
 
 // API Get Request to store
 function getStore() {
