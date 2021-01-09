@@ -13,15 +13,23 @@ import json
 
 
 def authHeader(request):
-
     signed_payload = request.GET.get('signed_payload')
-    print("lorem ispdum lorem ispdumlorem ispdumlorem ispdumlorem ispdumlorem ispdumlorem ispdum")
+    print('lorem lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum ipsum')
     print(signed_payload)
-    signed_payload_split = signed_payload.split(".")
-    signed_payload_split_decoded = url64.decode(signed_payload_split[0])
+    # signed_payload='eyJ1c2VyIjp7ImlkIjoxODIyOTg1LCJlbWFpbCI6InJhc2hpZGRhaGE4MEBnbWFpbC5jb20ifSwib3duZXIiOnsiaWQiOjE4MjI5ODUsImVtYWlsIjoicmFzaGlkZGFoYTgwQGdtYWlsLmNvbSJ9LCJjb250ZXh0Ijoic3RvcmVzLzR6anV0YWlyaTgiLCJzdG9yZV9oYXNoIjoiNHpqdXRhaXJpOCIsInRpbWVzdGFtcCI6MTYxMDE4NDIyOS4yNDI5MzJ9.MzZlZWQ2MjQxMWVmYWFjMWE4ZDVkN2NiZmVkNzZkZGRjY2ZkZWU5MTMwMDMxZjM0ZmIyZTY5NTQyZTgyNDM0Zg%3D%3D'
 
-    signed_payload_json = json.loads(signed_payload_split_decoded)
-    __store_hash =signed_payload_json["store_hash"]
+    x = signed_payload.split(".")
+
+    decoded = url64.decode(x[0])
+
+
+    json_object = json.loads(decoded)
+    __store_hash =json_object["store_hash"]
+
+
+
+
+
 
     authData = get_object_or_404(Auth, storehash = __store_hash)
     token = authData.token
