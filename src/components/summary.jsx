@@ -6,14 +6,14 @@ const store_hash = "4zjutairi8";
 
 // API Get Request to store
 function getStore() {
-  return fetch("/bc-api/v2/store/?store_hash=${store_hash}").then((store) =>
+  return fetch(`/bc-api/v2/store/?store_hash=${store_hash}`).then((store) =>
     store.json()
   );
 }
 // API Get Request to store Summary
 function getCatalog() {
   return fetch(
-    "/bc-api/v3/catalog/summary/?store_hash=${store_hash}"
+    `/bc-api/v3/catalog/summary/?store_hash=${store_hash}`
   ).then((store) => store.json());
 }
 

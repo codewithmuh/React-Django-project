@@ -11,13 +11,12 @@ import url64
 import json
 
 
-def getheaders(storehash){
+def getheaders(storehash):
 
     authData = get_object_or_404(Auth, storehash = storehash)
     token = authData.token
     headers = {'X-Auth-Token':  token , 'Accept': 'application/json', 'host':'api.bigcommerce.com'  ,'Content-Type': 'application/json'}
     return  headers
-}
 
 
 def authHeader(request , signed_payload):
@@ -80,10 +79,11 @@ def order(request, id):
 # Function to GET BigComerce Catalog Summary        
 @csrf_exempt
 def resources(request):
-     if request.GET.get('signed_payload'):
-        signed_payload = request.GET.get('signed_payload')
-        __store_hash , headers = authHeader(request, signed_payload)
-        url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v3/catalog/summary'
+      if request.GET.get('store_hash'):
+        store_hash = request.GET.get('store_hash')
+
+        headers = getheaders(store_hash)
+        url = 'https://api.bigcommerce.com/stores/' + store_hash + '/v3/catalog/summary'
         r = requests.get(url, headers=headers)
         return HttpResponse(r)
 
@@ -91,10 +91,10 @@ def resources(request):
 # Function to Update/Delete BigComerce Catalog Summary        
 @csrf_exempt
 def resource(request, id):
-     if request.GET.get('signed_payload'):
-        signed_payload = request.GET.get('signed_payload')
-        __store_hash , headers = authHeader(request, signed_payload)
-        url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v3/catalog/summary/{}'.format(id)
+     if request.GET.get('store_hash'):
+        store_hash = request.GET.get('store_hash')
+        headers = getheaders(store_hash)
+        url = 'https://api.bigcommerce.com/stores/' + store_hash + '/v3/catalog/summary/{}'.format(id)
         body = json.loads(request.body)
         if(request.method == "PUT"):
             r = requests.put(url, headers=headers , json =body)
