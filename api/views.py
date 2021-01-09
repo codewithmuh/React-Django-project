@@ -104,7 +104,7 @@ def resource(request, id):
 
 # Function to GET BigComerce Store
 @csrf_exempt
-def store(request):
+def store(request.GET):
     print('request  requestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequest')
     print(request)
     if request.GET.get('signed_payload'):
