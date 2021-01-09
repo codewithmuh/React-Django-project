@@ -39,29 +39,32 @@ def authHeader(request , signed_payload):
 
 # Function to GET BigComerce Orders 
 def orders(request):
-
-    __store_hash , headers = authHeader(request)
-    url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v2/orders'
-    r = requests.get(url, headers=headers)
-    return HttpResponse(r)
+     if request.GET.get('signed_payload'):
+        signed_payload = request.GET.get('signed_payload')
+        __store_hash , headers = authHeader(request)
+        url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v2/orders'
+        r = requests.get(url, headers=headers)
+        return HttpResponse(r)
 
 # Function to Update/Delete BigComerce Order 
 @csrf_exempt
 def order(request, id):
-    __store_hash , headers = authHeader(request)
-    url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v2/orders/{}'.format(id)
-    if(request.method == "PUT"):
-        body = json.loads(request.body)
-        r = requests.put(url, headers=headers , json =body)
-        return HttpResponse(r.content)
+     if request.GET.get('signed_payload'):
+        signed_payload = request.GET.get('signed_payload')
+        __store_hash , headers = authHeader(request)
+        url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v2/orders/{}'.format(id)
+        if(request.method == "PUT"):
+            body = json.loads(request.body)
+            r = requests.put(url, headers=headers , json =body)
+            return HttpResponse(r.content)
 
-    if(request.method == "DELETE"):
-        r = requests.delete(url, headers=headers )
+        if(request.method == "DELETE"):
+            r = requests.delete(url, headers=headers )
+            return HttpResponse(r)
+
+
+        r = requests.get(url, headers=headers )
         return HttpResponse(r)
-
-
-    r = requests.get(url, headers=headers )
-    return HttpResponse(r)
 
     
 
@@ -69,28 +72,32 @@ def order(request, id):
 # Function to GET BigComerce Catalog Summary        
 @csrf_exempt
 def resources(request):
-    __store_hash , headers = authHeader(request)
-    url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v3/catalog/summary'
-    r = requests.get(url, headers=headers)
-    return HttpResponse(r)
+     if request.GET.get('signed_payload'):
+        signed_payload = request.GET.get('signed_payload')
+        __store_hash , headers = authHeader(request)
+        url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v3/catalog/summary'
+        r = requests.get(url, headers=headers)
+        return HttpResponse(r)
 
 
 # Function to Update/Delete BigComerce Catalog Summary        
 @csrf_exempt
 def resource(request, id):
-    __store_hash , headers = authHeader(request)
-    url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v3/catalog/summary/{}'.format(id)
-    body = json.loads(request.body)
-    if(request.method == "PUT"):
-        r = requests.put(url, headers=headers , json =body)
-        return HttpResponse(r.content)
+     if request.GET.get('signed_payload'):
+        signed_payload = request.GET.get('signed_payload')
+        __store_hash , headers = authHeader(request)
+        url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v3/catalog/summary/{}'.format(id)
+        body = json.loads(request.body)
+        if(request.method == "PUT"):
+            r = requests.put(url, headers=headers , json =body)
+            return HttpResponse(r.content)
 
-    if(request.method == "DELETE"):
+        if(request.method == "DELETE"):
+            r = requests.delete(url, headers=headers , json =body)
+            return HttpResponse(r.content)
+        
         r = requests.delete(url, headers=headers , json =body)
         return HttpResponse(r.content)
-    
-    r = requests.delete(url, headers=headers , json =body)
-    return HttpResponse(r.content)
 
 
 
