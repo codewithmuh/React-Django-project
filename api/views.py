@@ -11,7 +11,7 @@ import url64
 import json
 
 
-def headers(storehash){
+def getheaders(storehash){
 
     authData = get_object_or_404(Auth, storehash = storehash)
     token = authData.token
@@ -116,7 +116,7 @@ def store(request):
     if request.GET.get('store_hash'):
         store_hash = request.GET.get('store_hash')
 
-        headers = headers(store_hash)
+        headers = getheaders(store_hash)
         url = 'https://api.bigcommerce.com/stores/' + store_hash + '/v2/store'
         r = requests.get(url, headers=headers)
         return HttpResponse(r)
