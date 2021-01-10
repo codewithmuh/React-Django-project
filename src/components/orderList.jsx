@@ -23,23 +23,22 @@ function getList() {
 
 // API POST call to update orders
 function orderUpdate(orderId) {
-  return fetch(`/bc-api/v2/orders/${orderId}/`, {
+  return fetch(`/bc-api/v2/orders/${orderId}/?payload=${payload}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ status_id: 5, payload: payload }),
+    body: JSON.stringify({ status_id: 5 }),
   });
 }
 
 // API DELETE call to delete orders
 function orderDelete(orderId) {
-  return fetch(`/bc-api/v2/orders/${orderId}/`, {
+  return fetch(`/bc-api/v2/orders/${orderId}/?payload=${payload}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ payload: payload }),
   });
 }
 

@@ -9,18 +9,8 @@ import json
 
 
 def authData(request ):
-    if(request.method == "DELETE"):
-        body = json.loads(request.body)
-        payload = body['payload']
 
-
-    if(request.method == "PUT"):
-        body = json.loads(request.body)
-        payload = body['payload']
-
-
-    if(request.method == "GET"):
-        payload = request.GET.get('payload')
+    payload = request.GET.get('payload')
 
 
     x = payload.split("=")
@@ -97,9 +87,7 @@ def resource(request, id):
 def store(request):
     __store_hash , headers = authData(request)
     url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v2/store'
-    
-    print("request requestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequest")
-    print(request.get_full_path())
+
 
     r = requests.get(url, headers=headers)
     return HttpResponse(r)
