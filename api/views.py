@@ -12,14 +12,21 @@ import json
 
 
 
+def client_secret():
+    return config('appClientSecret')
+
+
 def authData(request ):
     payload = request.GET.get('payload')
     x = payload.split("=")
-    y = x[1].split(".")
-    decoded = url64.decode(y[0])
+    a = BigcommerceApi.oauth_verify_payload(x, client_secret())
+    __store_hash = a['store_hash']
 
-    json_object = json.loads(decoded)
-    __store_hash =json_object["store_hash"]
+
+    # y = x[1].split(".")
+    # decoded = url64.decode(y[0])
+    # json_object = json.loads(decoded)
+    # __store_hash =json_object["store_hash"]
 
     authData = get_object_or_404(Auth, storehash = __store_hash)
     token = authData.token

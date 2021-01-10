@@ -32,7 +32,7 @@ def auth(request):
 
         store_hash = context.split('/')[1]
 
-        client = BigcommerceApi(client_id=client_id(), store_hash=config('apiStoreHash'))
+        client = BigcommerceApi(client_id=client_id(), store_hash=store_hash)
 
         token = client.oauth_fetch_token(client_secret(), code, context, scope, redirect)
         bc_user_id = token['user']['id']
