@@ -11,14 +11,12 @@ import json
 def authData(request ):
     if(request.method == "DELETE"):
         body = json.loads(request.body)
-        aa = body['payload']
-        payload=aa[0]
+        payload = body['payload']
 
 
     if(request.method == "PUT"):
         body = json.loads(request.body)
-        aa = body['payload']
-        payload=aa[0]
+        payload = body['payload']
 
 
     if(request.method == "GET"):
