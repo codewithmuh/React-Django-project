@@ -97,6 +97,10 @@ def resource(request, id):
 def store(request):
     __store_hash , headers = authData(request)
     url = 'https://api.bigcommerce.com/stores/' + __store_hash + '/v2/store'
+    
+    print("request requestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequest")
+    print(request.get_full_path())
+
     r = requests.get(url, headers=headers)
     return HttpResponse(r)
 
