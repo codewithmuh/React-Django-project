@@ -7,7 +7,7 @@ import url64
 import json
 
 
-
+@csrf_exempt
 def authData(request ):
 
     payload = request.GET.get('payload')
