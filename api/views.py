@@ -9,14 +9,27 @@ import json
 
 
 def authData(request ):
-    payload = request.GET.get('payload')
+    if(request.method == "DELETE"):
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        payload = body['payload']
+
+
+    if(request.method == "PUT"):
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        payload = body['payload']
+
+
+    if(request.method == "GET"):
+        payload = request.GET.get('payload')
+
+
     x = payload.split("=")
     y = x[1].split(".")
     decoded = url64.decode(y[0])
-
     json_object = json.loads(decoded)
     __store_hash =json_object["store_hash"]
-
     authData = get_object_or_404(Auth, storehash = __store_hash)
     token = authData.token
     headers = {'X-Auth-Token':  token , 'Accept': 'application/json', 'host':'api.bigcommerce.com'  ,'Content-Type': 'application/json'}

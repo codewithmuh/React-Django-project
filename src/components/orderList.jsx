@@ -28,7 +28,7 @@ function orderUpdate(orderId) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ status_id: 5 }),
+    body: JSON.stringify({ status_id: 5, payload: payload }),
   });
 }
 
@@ -39,6 +39,7 @@ function orderDelete(orderId) {
     headers: {
       "Content-Type": "application/json",
     },
+    body: JSON.stringify({ payload: payload }),
   });
 }
 
