@@ -1,4 +1,5 @@
 # python-django-react-sample-app
+
 Sample BigCommerce App using Python, Django, and React
 
 𝐇𝐨𝐰 𝐭𝐨 𝐫𝐮𝐧 𝐢𝐭 𝐢𝐧 𝐋𝐨𝐜𝐚𝐥 𝐦𝐚𝐜𝐡𝐢𝐧𝐞 ?
@@ -22,9 +23,10 @@ https://www.anaconda.com/products/individual
 
 𝐅𝐎𝐫 𝐍𝐠𝐫𝐨𝐤 :
 In .env file use http instead of https for callBackURL for ngrok.
-_____________________________________________________________________________________
 
-𝐒𝐭𝐞𝐩𝐬 𝐭𝐨 𝐟𝐨𝐥𝐥𝐨𝐰 𝐭𝐨 𝐢𝐧𝐬𝐭𝐚𝐥𝐥 𝐭𝐡𝐞 𝐚𝐩𝐩 𝐨𝐧 𝐁𝐢𝐠𝐂𝐨𝐦𝐦𝐞𝐫𝐜𝐞𝐬𝐭𝐨𝐫𝐞. 
+---
+
+𝐒𝐭𝐞𝐩𝐬 𝐭𝐨 𝐟𝐨𝐥𝐥𝐨𝐰 𝐭𝐨 𝐢𝐧𝐬𝐭𝐚𝐥𝐥 𝐭𝐡𝐞 𝐚𝐩𝐩 𝐨𝐧 𝐁𝐢𝐠𝐂𝐨𝐦𝐦𝐞𝐫𝐜𝐞𝐬𝐭𝐨𝐫𝐞.
 
 𝗪𝗲 𝘄𝗶𝗹𝗹 𝗵𝗶𝗴𝗵𝗹𝘆 𝗿𝗲𝗰𝗼𝗺𝗺𝗲𝗻𝗱 𝘄𝗮𝘁𝗰𝗵𝗶𝗻𝗴 𝘃𝗶𝗱𝗲𝗼 𝗱𝘂𝗿𝗶𝗻𝗴 𝗶𝗻𝘀𝘁𝗮𝗹𝗹𝗮𝘁𝗶𝗼𝗻 𝗮𝗽𝗽 𝗼𝗻 𝘁𝗵𝗲 𝘀𝘁𝗼𝗿𝗲.
 Here is installation video
@@ -60,10 +62,6 @@ https://youtu.be/FKf5pOBC3z0
 
 15.Click Reveal Config Variable and Add following Variables
 
-apiToken = dwvhv8miusl07noqz7ax5crh9iox7l4
-
-apiStoreHash = 4zjutairi8
-
 appClientId = elfctt4r8cai3u6cw4yg70lamxroke8
 
 appClientSecret = ee074094318cdbd56bba82dd7e1ba9df2f5794b51fdeb27c0e8ac0f88a95f904
@@ -80,7 +78,7 @@ appClientSecret = ee074094318cdbd56bba82dd7e1ba9df2f5794b51fdeb27c0e8ac0f88a95f9
 
 21.Click Edit App and Go to Technical Tab of APP and Fill the following fields
 
-22.Auth Callback URL (add cb/auth athe the end of heroku app url)
+22.Auth Callback URL (add /auth at the end of heroku app url)
 
 23.Load Callback URL
 
@@ -92,4 +90,4 @@ appClientSecret = ee074094318cdbd56bba82dd7e1ba9df2f5794b51fdeb27c0e8ac0f88a95f9
 
 27.from side Menue Apps > My Apps
 
-28.go to My Draft Apps Tab and Install the App
+Note: To run React at development run "yarn run" and to compile Reactjs code run "yarn build" at root level folder.

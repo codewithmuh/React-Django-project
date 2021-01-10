@@ -1,32 +1,21 @@
 from django.http import  HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import requests
-import json
-from decouple import config, Csv
 from callback.models import Auth
 from django.shortcuts import get_object_or_404
-from bigcommerce.api import BigcommerceApi
-
 import url64
 import json
 
 
 
-def client_secret():
-    return config('appClientSecret')
-
-
 def authData(request ):
     payload = request.GET.get('payload')
     x = payload.split("=")
-    a = BigcommerceApi.oauth_verify_payload(x, client_secret())
-    __store_hash = a['store_hash']
+    y = x[1].split(".")
+    decoded = url64.decode(y[0])
 
-
-    # y = x[1].split(".")
-    # decoded = url64.decode(y[0])
-    # json_object = json.loads(decoded)
-    # __store_hash =json_object["store_hash"]
+    json_object = json.loads(decoded)
+    __store_hash =json_object["store_hash"]
 
     authData = get_object_or_404(Auth, storehash = __store_hash)
     token = authData.token
